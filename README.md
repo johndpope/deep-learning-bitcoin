@@ -16,7 +16,7 @@ So far, we achieved:
 - [x] Convert to 5-minute data
 - [x] Convert to Open High Low Close representation
 - [x] Train a simple AlexNet on 20,000 samples: accuracy is 70% for predicting if asset will go UP or DOWN
-- [ ] Quantify how much the price will go UP or DOWN. Because the price can go UP by epsilon percent 99% of the time, and pulls back by 50%
+- [x] Quantify how much the price will go UP or DOWN. Because the price can go UP by epsilon percent 99% of the time, and pulls back by 50%
 - [ ] Train on **1,000,000+** samples (at least)
 - [ ] Apply more complex Conv Nets (at least Google LeNet)
 - [ ] Integrate bar volumes on the generated OHLC (Open, High, Low, Close) image
@@ -51,3 +51,18 @@ DateTime_UTC
 - Scroll right to see all the columns!
 - Volumes are displayed in BTC.
 - Returns are in percentage and are computed on the close prices.
+
+## How to get started?
+```
+git clone https://github.com/philipperemy/deep-learning-bitcoin.git
+cd deep-learning-bitcoin
+./data_download.sh # will download it to /tmp/
+python3 data_generator.py /tmp/btc-trading-patterns/ /tmp/coinbaseUSD.csv 1 # 1 means we want to use quantiles on returns. 0 would mean we are interested if the bitcoin goes UP or DOWN only.
+```
+
+If you are interested into building a huge dataset (coinbase.csv contains around 18M rows), it's preferrable to run the program in background mode:
+
+```
+nohup python3 -u data_generator.py /tmp/btc-trading-patterns/ /tmp/coinbaseUSD.csv 1 > /tmp/btc.out 2>&1 &
+tail -f /tmp/btc.out
+```
